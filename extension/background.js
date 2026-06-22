@@ -4,10 +4,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     console.log("Message received:", request);
 
     if (request.type === "analyze") {
+        console.log("Website URl:",request.url);
 
-        console.log("Calling Flask API");
-
-        fetch("http://127.0.0.1:5000/analyze")
+        fetch(
+    "http://127.0.0.1:5000/analyze?url=" +
+    encodeURIComponent(request.url)
+)
             .then(response => response.json())
             .then(data => {
                 console.log("Flask returned:", data);
