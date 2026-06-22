@@ -13,40 +13,48 @@ def home():
 @app.route("/analyze")
 def analyze():
 
-    url = request.args.get("url", "")
+    url = request.args.get("url", "").lower()
 
-    print("Website:", url)
+    safe_sites = [
+        "google",
+        "gmail",
+        "wikipedia",
+        "github"
+    ]
 
-    if "google" in url:
+    blocked_sites = [
+        "porn",
+        "xvideos",
+        "xnxx",
+        "pornhub"
+    ]
 
-        return jsonify({
-            "risk": 5,
-            "category": "Safe",
-            "action": "allow"
-        })
+    warning_sites = [
+        "instagram",
+        "snapchat",
+        "tiktok"
+    ]
 
-    elif "youtube" in url:
+    for site in blocked_sites:
+        if site in url:
+            return jsonify({
+                "risk": 95,
+                "category": "Adult Content",
+                "action": "block"
+            })
 
-        return jsonify({
-            "risk": 20,
-            "category": "Entertainment",
-            "action": "allow"
-        })
+    for site in warning_sites:
+        if site in url:
+            return jsonify({
+                "risk": 70,
+                "category": "Social Media",
+                "action": "warn"
+            })
 
-    elif "torrent" in url:
-
-        return jsonify({
-            "risk": 70,
-            "category": "Piracy",
-            "action": "warn"
-        })
-
-    else:
-
-        return jsonify({
-            "risk": 95,
-            "category": "Unknown Risk",
-            "action": "block"
-        })
+    return jsonify({
+        "risk": 5,
+        "category": "Safe",
+        "action": "allow"
+    })
 if __name__ =="__main__":
     app.run(debug=True)
