@@ -1,0 +1,19 @@
+SOCIAL_MEDIA=[
+    "instagram.com",
+    "snapchat.com",
+    "facebook.com",
+    "x.com",
+    "telegram.com",
+    "reddit.com"
+]
+ADULT_CONTENT=[
+    "pornhub.com",
+    "xvideo.com",
+    "xhamster.com",
+    "xnxx.com"
+]
+GAMBLING=[
+    "bet365.com",
+    "stake.com",
+    "1xbet.com"
+]
