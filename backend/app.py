@@ -10,51 +10,55 @@ def home():
     return jsonify({
         "message": "GuardianMind AI Backend Running"
     })
+SOCIAL_MEDIA=[
+    "instagram.com",
+    "snapchat.com",
+    "facebook.com",
+    "x.com",
+    "telegram.com",
+    "reddit.com"
+]
+ADULT_CONTENT=[
+    "pornhub.com",
+    "xvideo.com",
+    "xhamster.com",
+    "xnxx.com"
+]
+GAMBLING=[
+    "bet365.com",
+    "stake.com",
+    "1xbet.com"
+]
 @app.route("/analyze")
 def analyze():
-
     url = request.args.get("url", "").lower()
+    print("Website:",url)
 
-    safe_sites = [
-        "google",
-        "gmail",
-        "wikipedia",
-        "github"
-    ]
-
-    blocked_sites = [
-        "porn",
-        "xvideos",
-        "xnxx",
-        "pornhub"
-    ]
-
-    warning_sites = [
-        "instagram",
-        "snapchat",
-        "tiktok"
-    ]
-
-    for site in blocked_sites:
+    for site in ADULT_CONTENT:
         if site in url:
             return jsonify({
                 "risk": 95,
-                "category": "Adult Content",
+                "categoy": "Adult Content",
                 "action": "block"
             })
-
-    for site in warning_sites:
+    for site in GAMBLING:
+        if site in url:
+            return jsonify({
+                "risk": 95,
+                "category": "Gambling",
+                "action": "block"
+            })
+    for site in SOCIAL_MEDIA:
         if site in url:
             return jsonify({
                 "risk": 70,
                 "category": "Social Media",
                 "action": "warn"
             })
-
     return jsonify({
         "risk": 5,
         "category": "Safe",
-        "action": "allow"
+        "action": "block"
     })
 if __name__ =="__main__":
     app.run(debug=True)
